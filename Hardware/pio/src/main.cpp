@@ -1,99 +1,77 @@
 #include <Arduino.h>
 #include <WiFi.h>
-#include <PubSubClient.h>
+#include <custom_mqtt.h>
+#include <wifi_setup.h>
+#include <custom_dht.h>
+#include <custom_soilMoist.h>
 
 // My Includes
 #include <secrets.h>
 
-// Wifi credentials
-const char* ssid = WIFI_NAME;
-const char* password = WIFI_PASSWORD;
-
-// MQTT
-// const char* brokerUser = "";
-// const char* brokerPass = "";
-const char* broker = "broker.hivemq.com";
-const char* outTopic = "/his2_mqtt/out";
-const char* inTopic = "/his2_mqtt/in";
-
 WiFiClient espClient;
-PubSubClient client(espClient);
+CustomMqtt mqtt(espClient);
 
-// Global Variables
-// int count = 0;
-// long currentTime, lastTime;
-// char messages[50];
+CustomDht mydht(DHTPIN, DHTTYPE);
+CustomSoilMoist m1(MOISTURE_PIN_1);
+CustomSoilMoist m2(MOISTURE_PIN_2);
 
+#define SETUP_ID 1
 
-void setup_wifi() {
-  delay(100);
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+int count = 0;
+long currentTime, lastTime;
+char messages[400];
 
-  WiFi.begin(ssid, password);
+void test(float &humidity, float &temperature, int &moistureLevel_1, int &moistureLevel_2)
+{
+    currentTime = millis();
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(100);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-  }
-  Serial.println();
-}
-
-void reconnect() {
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection to ...");
-    Serial.println(broker);
-
-    if (client.connect("Gaurav_ESP32Client")) {
-      Serial.println("Connected to");
-      Serial.println(broker);
-      client.subscribe(inTopic);
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
+    if(currentTime - lastTime > 2000 )
+    {
+        snprintf(messages, 500, "Temp: %ld   Hum: %ld\n Moisture-1: %d   Moisture-2: %d", temperature, humidity, moistureLevel_1, moistureLevel_2);
+        Serial.println("Sending messages: ");
+        Serial.println(messages);
+        mqtt.publish(messages);
+        lastTime = millis();
+        Serial.println();
     }
-  }
 }
 
-void setup() {
-  Serial.begin(115200);
-  setup_wifi();
-  client.setServer(broker, 1883);
-  client.setCallback(callback);
+
+void setup()
+{
+    Serial.begin(9600);
+
+    WifiSetup::connect(ENV_WIFI_NAME, ENV_WIFI_PASSWORD);
+
+    mqtt.setup(ENV_BROKER, ENV_PORT, ENV_OUTTOPIC, ENV_INTOPIC);
+    mqtt._client.setCallback([](char *topic, byte *payload, unsigned int length){ 
+        mqtt.callback(topic, payload, length); });
+
+    mydht.begin();
+
+    m1.begin();
+    m2.begin();
+
 }
 
-void loop() {
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
+void loop()
+{
+    mqtt.loop();
 
-//   currentTime = millis();
+    float humidity = mydht.readHumidity();
+    float temperature = mydht.readTemperature(); // degree celsius
 
-//   if(currentTime - lastTime > 2000)
-//   {
-//     count++;
-//     snprintf(messages, 75, "Count: %ld", count);
-//     Serial.print("Sending messages: ");
-//     Serial.println(messages);
-//     client.publish(outTopic, messages);
-//     lastTime = millis();
-//   }
+    if (isnan(humidity) || isnan(temperature)) {
+        Serial.println(F("Failed to read from DHT sensor!"));
+
+        humidity = INT_MIN;
+        temperature = INT_MIN;
+    }
+
+    int moistureLevel_1 = m1.readMoisture();
+    int moistureLevel_2 = m2.readMoisture();
+
+    delay(2000);
+
+    test(humidity, temperature, moistureLevel_1, moistureLevel_2);
 }
