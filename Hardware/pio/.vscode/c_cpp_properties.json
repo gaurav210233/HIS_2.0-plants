@@ -10,6 +10,7 @@
             "includePath": [
                 "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/include",
                 "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/src",
+                "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/.pio/libdeps/esp32dev/PubSubClient/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
@@ -230,7 +231,6 @@
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
@@ -241,6 +241,7 @@
                 "path": [
                     "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/include",
                     "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/src",
+                    "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/home/gaurav/Code/HIS_2.0/HIS_2.0-plants/Hardware/pio/.pio/libdeps/esp32dev/PubSubClient/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
@@ -461,7 +462,6 @@
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                    "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "/home/gaurav/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
