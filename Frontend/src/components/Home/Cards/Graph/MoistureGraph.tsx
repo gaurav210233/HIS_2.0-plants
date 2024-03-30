@@ -25,6 +25,7 @@ interface PlantData {
   plantData: {
     createdAt: string;
     MoistureLevel: number;
+    PlantID: string;
   }[];
 }
 
@@ -40,16 +41,17 @@ export default function Graph({ plantData }: PlantData) {
       },
     ],
   });
-
+  console.log(plantData);
   useEffect(() => {
     // Assuming the response structure is like { createdAt: string, moistureLevel: number }[]
     const labels = plantData.map((entry) => entry.createdAt);
     const values = plantData.map((entry) => entry.MoistureLevel);
 
     // Slice the last 12 entries
-    const slicedLabels = labels.slice(-12);
-    const slicedValues = values.slice(-12);
-
+    const size = labels.length < 12 ? -labels.length : -12;
+    const slicedLabels = labels.slice(size);
+    const slicedValues = values.slice(size);
+    // console.log(slicedValues);
     setChartData({
       labels: slicedLabels,
       datasets: [

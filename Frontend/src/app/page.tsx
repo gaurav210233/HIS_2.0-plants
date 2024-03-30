@@ -5,7 +5,8 @@ import PlantDataCarosel from "@/components/Home/PlantDataCarousel";
 
 export interface plantDataInterface {
   createdAt: string;
-  MoistureLevel: 0;
+  MoistureLevel: number;
+  PlantId: string;
 }
 [];
 
@@ -31,12 +32,16 @@ export default function Home() {
         humidity: data[data.length - 1].Humidity,
         temperature: data[data.length - 1].Temperature,
         setupName: data[data.length - 1].Id,
-      };``
+      };
+      ``;
 
-      const plantDataArray = data.map(({ createdAt, MoistureLevel }) => ({
-        createdAt,
-        MoistureLevel,
-      }));
+      const plantDataArray = data.map(
+        ({ createdAt, MoistureLevel, PlantId }) => ({
+          createdAt,
+          MoistureLevel,
+          PlantId,
+        })
+      );
 
       setGData(gData);
       console.log(gData);

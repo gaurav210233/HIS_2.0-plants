@@ -6,6 +6,7 @@ interface PlantData {
     {
       createdAt: string;
       MoistureLevel: number;
+      PlantId: string;
     }
   ];
 }
@@ -15,7 +16,7 @@ export default function PlantDataCard({ plantData }: PlantData) {
     <div>
       <Card className="h-[65vh] w-[60vw]">
         <CardContent>
-          <span>Plant Name : Plant 1</span>
+          <span>Plant Name : {plantData[0].PlantId}</span>
           <Graph plantData={plantData} />
         </CardContent>
       </Card>

@@ -15,15 +15,23 @@ interface PlantData {
     {
       createdAt: string;
       MoistureLevel: number;
+      PlantId: string;
     }
   ];
 }
 
-export default function PlantDataCarosel({ plantData }: PlantData) {
-  // console.log("hELLO", plantData);
+export default function PlantDataCarousel({ plantData }: PlantData) {
   const plugin = React.useRef(
     Autoplay({ delay: 10000, stopOnInteraction: true })
   );
+
+  const plantIds = React.useMemo(() => {
+    const ids = new Set<string>();
+    plantData.forEach((data) => {
+      ids.add(data.PlantId);
+    });
+    return Array.from(ids).reverse();
+  }, [plantData]);
 
   return (
     <>
@@ -34,10 +42,12 @@ export default function PlantDataCarosel({ plantData }: PlantData) {
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
+          {plantIds.map((id) => (
+            <CarouselItem key={id}>
               <div className="p-1">
-                <PlantDataCard plantData={plantData} />
+                <PlantDataCard
+                  plantData={plantData.filter((data) => data.PlantId === id)}
+                />
               </div>
             </CarouselItem>
           ))}
