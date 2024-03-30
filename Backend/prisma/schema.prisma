@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  FirstName String   @map("first_name") @db.VarChar(255)
+  LastName  String   @map("last_name") @db.VarChar(255)
+  Email     String   @unique @map("email")
+  Password  String   @map("password")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Unit {
+  LogId         Int     @id @default(autoincrement()) @map("log_id")
+  Id            String  @default(uuid())
+  PlantId       Int     @map("plant_id") 
+  UserId        String? @map("user_id")
+  MoistureLevel Float   @map("moisture_level") @db.DoublePrecision
+  Humidity      Float   @map("humidity") @db.DoublePrecision
+  Temperature   Float   @map("temperature") @db.DoublePrecision
+  WaterLevel    Float   @map("water_level") @db.DoublePrecision
+  MotorState    Float   @map("motor_state") @db.DoublePrecision
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([PlantId])
+  @@map("units")
+}
