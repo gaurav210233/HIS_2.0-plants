@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import {
   Carousel,
   CarouselContent,
@@ -17,13 +18,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import
+//   Drawer,
+// DrawerClose,
+// DrawerContent,
+// DrawerDescription,
+// DrawerFooter,
+// DrawerHeader,
+// DrawerTitle,
+// DrawerTrigger,
+// "@/components/ui/drawer";
+
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 
 import GDataCard from "./Cards/GDataCard";
 import { Button } from "../ui/button";
@@ -31,16 +43,38 @@ import DeviceSetupForm from "./DeviceSetupForm";
 export interface DataProps {
   temperature: number;
   humidity: number;
+  setupId: string;
   setupName: string;
 }
 const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
-  console.log(temperature, humidity, setupName);
+  // console.log(temperature, humidity, setupName);
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("API response:", responseData);
+      } else {
+        console.error("API request failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
-    <div className="mt-[2vh] mx-[3vw]">
+    <div >
       <div className="flex justify-center mb-[1vh] mx-[2vw]">
         <h1 className="text-[3.5vh] text-[black]">Setup Devices</h1>
       </div>
       <GDataCard
+        setupId=""
         temperature={temperature}
         humidity={humidity}
         setupName={setupName}
@@ -73,52 +107,6 @@ const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
           <SelectItem value="system">System</SelectItem>
         </SelectContent>
       </Select> */}
-      <div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="my-[2vh]" variant="outline">
-              Add Device
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Fill Device Details</DialogTitle>
-              <DialogDescription>
-                <DeviceSetupForm />
-              </DialogDescription>
-            </DialogHeader>
-
-            <DialogFooter className="sm:justify-start">
-              {/* <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Close
-              </Button>
-            </DialogClose> */}
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-        <Dialog>
-          <DialogTrigger>
-            <Button className="mx-[2vw] bg-red-900 onClick">Fail Safe</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-            </DialogHeader>
-
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                
-              </Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Yes
-              </Button>
-            </DialogClose>
-          </DialogContent>
-        </Dialog>
-      </div>
     </div>
   );
 };

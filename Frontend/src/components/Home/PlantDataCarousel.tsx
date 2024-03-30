@@ -17,9 +17,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "../ui/dialog";
 import PlantSetupForm from "./PlantSetupForm";
-import { DialogClose } from "@radix-ui/react-dialog";
 
 interface PlantData {
   plantData: [
@@ -48,7 +48,7 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
     <div className="w-[100vw]">
       <Carousel
         plugins={[plugin.current]}
-        className="mx-[2vw] w-[100%]"
+        className="w-[100%]"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
@@ -66,29 +66,6 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
         {/* <CarouselPrevious /> */}
         {/* <CarouselNext /> */}
       </Carousel>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button className="mx-[2vw] my-[2vh]" variant="outline">
-            Add Plant/Crop
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Fill Device Details</DialogTitle>
-            <DialogDescription>
-              <PlantSetupForm />
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter className="sm:justify-start">
-            {/* <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                Close
-              </Button>
-            </DialogClose> */}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>{" "}
     </div>
   );
 }
