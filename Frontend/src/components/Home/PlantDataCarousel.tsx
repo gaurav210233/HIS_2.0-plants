@@ -41,21 +41,21 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
     plantData.forEach((data) => {
       ids.add(data.PlantId);
     });
-    return Array.from(ids).reverse();
+    return Array.from(ids);
   }, [plantData]);
 
   return (
-    <>
+    <div className="w-[100vw]">
       <Carousel
         plugins={[plugin.current]}
-        className="mx-[100px]"
+        className=""
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent>
           {plantIds.map((id) => (
             <CarouselItem key={id}>
-              <div className="p-1">
+              <div className="w-[100vw]">
                 <PlantDataCard
                   plantData={plantData.filter((data) => data.PlantId === id)}
                 />
@@ -63,8 +63,8 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/* <CarouselPrevious /> */}
+        {/* <CarouselNext /> */}
       </Carousel>
       <Dialog>
         <DialogTrigger asChild>
@@ -87,6 +87,6 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
           </DialogFooter>
         </DialogContent>
       </Dialog>{" "}
-    </>
+    </div>
   );
 }

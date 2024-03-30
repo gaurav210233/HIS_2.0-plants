@@ -34,38 +34,57 @@ export default function Graph({ plantData }: PlantData) {
     labels: [],
     datasets: [
       {
-        label: "Real-time Data",
+        label: "Real-Time Moisture Reading",
         data: [],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
     ],
   });
-  console.log(plantData);
+
   useEffect(() => {
     // Assuming the response structure is like { createdAt: string, moistureLevel: number }[]
     const labels = plantData.map((entry) => entry.createdAt);
     const values = plantData.map((entry) => entry.MoistureLevel);
-
     // Slice the last 12 entries
     const size = labels.length < 12 ? -labels.length : -12;
     const slicedLabels = labels.slice(size);
     const slicedValues = values.slice(size);
-    // console.log(slicedValues);
+
     setChartData({
       labels: slicedLabels,
-      datasets: [
-        {
-          ...chartData.datasets[0],
-          data: slicedValues,
-        },
-      ],
+      datasets: [{ ...chartData.datasets[0], data: slicedValues }],
     });
   }, [plantData]);
 
   return (
-    <div className="dashboard">
-      <Line data={chartData} />
+    <div className="dashboard" style={{ width: "90vw", height: "70vh" }}>
+      <Line
+        data={chartData}
+        options={{
+          aspectRatio: 2, // Adjust the aspect ratio for better appearance on mobile
+          maintainAspectRatio: true, // Maintain aspect ratio
+          responsive: true, // Resize when the container size changes
+          plugins: {
+            title: {
+              display: true,
+              text: "Moisture Level Over Time", // Graph title
+              font: {
+                size: 16, // Adjust font size for better visibility on mobile
+              },
+            },
+            legend: {
+              display: true,
+              position: "bottom", // Legend position
+              labels: {
+                font: {
+                  size: 12, // Adjust font size for better visibility on mobile
+                },
+              },
+            },
+          },
+        }}
+      />
     </div>
   );
 }

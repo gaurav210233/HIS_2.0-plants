@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import GDataCarosel from "@/components/Home/GDataCarosel";
 import PlantDataCarosel from "@/components/Home/PlantDataCarousel";
 
-export interface plantDataInterface {
+export interface PlantData {
   createdAt: string;
   MoistureLevel: number;
   PlantId: string;
 }
-[];
 
 export default function Home() {
   const [gData, setGData] = useState({
@@ -16,12 +15,12 @@ export default function Home() {
     temperature: 0,
     setupName: "",
   });
-  const [plantData, setPlantData] = useState([]);
+  const [plantData, setPlantData] = useState<PlantData[]>([]);
 
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://jjs2jkn0-3000.inc1.devtunnels.ms/api/v1/log/all"
+        "https://jjs2jkn0-3002.inc1.devtunnels.ms/api/v1/log/all"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -33,7 +32,6 @@ export default function Home() {
         temperature: data[data.length - 1].Temperature,
         setupName: data[data.length - 1].Id,
       };
-      ``;
 
       const plantDataArray = data.map(
         ({ createdAt, MoistureLevel, PlantId }) => ({
@@ -44,8 +42,14 @@ export default function Home() {
       );
 
       setGData(gData);
-      console.log(gData);
-      setPlantData(plantDataArray);
+
+      // Convert createdAt timestamps to hh:mm format
+      const convertedPlantData = plantDataArray.map((item) => ({
+        ...item,
+        createdAt: convertToTimeFormat(item.createdAt),
+      }));
+
+      setPlantData(convertedPlantData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -56,14 +60,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(fetchData, 60000);
+    const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    console.log(plantData);
-  }, [plantData]);
-  // Function to update plantData
+  const convertToTimeFormat = (createdAt: string): string => {
+    const date = new Date(createdAt);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
 
   return (
     <>

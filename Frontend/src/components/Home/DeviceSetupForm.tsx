@@ -14,7 +14,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 
 const formSchema = z.object({
-  name: z.string(),
+  name: z.string().min(4),
   url: z.string().url(),
   password: z.string().min(3),
 });
@@ -65,7 +65,12 @@ export default function DeviceSetupForm() {
                 <FormItem>
                   <FormLabel>Setup Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Setup Name" type="name" {...field} />
+                    <Input
+                      required
+                      placeholder="Setup Name"
+                      type="name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,9 +83,9 @@ export default function DeviceSetupForm() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>URL</FormLabel>
+                  <FormLabel className="align-left">URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="URL" type="url" {...field} />
+                    <Input required placeholder="URL" type="url" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,7 +100,12 @@ export default function DeviceSetupForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Password" type="password" {...field} />
+                    <Input
+                      placeholder="Password"
+                      required
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
