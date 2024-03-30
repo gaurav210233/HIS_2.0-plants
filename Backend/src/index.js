@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/v1", router);
 
 
-app.listen(3002, () => console.log("🚀 Server is running on port 3002"));
+app.listen(3000, () => console.log("🚀 Server is running on port 3000"));
 
 const client = mqtt.connect("mqtt://broker.hivemq.com");
 
@@ -57,7 +57,7 @@ client.on("message", async(topic, message) => {
     }
   } else {
     console.log(data);
-    // addLogViaMqtt(data)
+    addLogViaMqtt(data)
   }
 });
 
@@ -69,6 +69,9 @@ app.patch("/kill",async(req,res)=>{
     killSwitch : 1,
     MoistureLevel :0 
   }
+  console.log('====================================');
+  console.log(response);
+  console.log('====================================');
   client.publish(toEsp, JSON.stringify(response));
 
   res.json({"status":"success"})
