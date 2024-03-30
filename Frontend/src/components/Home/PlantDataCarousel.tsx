@@ -1,42 +1,51 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-
-import { Card, CardContent } from "@/components/ui/card";
+import PlantDataCard from "./Cards/PlantDataCard";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "../ui/carousel";
+import { Button } from "../ui/button";
 
-export default function PlantDataCarosel() {
+interface PlantData {
+  plantData: [
+    {
+      createdAt: string;
+      MoistureLevel: number;
+    }
+  ];
+}
+
+export default function PlantDataCarosel({ plantData }: PlantData) {
+  // console.log("hELLO", plantData);
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 10000, stopOnInteraction: true })
   );
 
   return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full max-w-xs ml-[100px]"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <>
+      <Carousel
+        plugins={[plugin.current]}
+        className="mx-[100px]"
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+      >
+        <CarouselContent>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <CarouselItem key={index}>
+              <div className="p-1">
+                <PlantDataCard plantData={plantData} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+      <Button>Add a Plant</Button>
+    </>
   );
 }
