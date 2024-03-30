@@ -24,6 +24,8 @@ int count = 1;
 int avg = 1;
 int motor_state = 0; // 80%
 
+int killSwitchState = 0;
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -80,6 +82,39 @@ void callback (char *topic, byte *payload, unsigned int length)
     Serial.print((char)payload[i]);
   }
   Serial.println();
+
+  // Parse JSON payload
+  DynamicJsonDocument doc(1024);
+  DeserializationError error = deserializeJson(doc, payload, length);
+
+  if (error) {
+    Serial.print("deserializeJson() failed: ");
+    Serial.println(error.c_str());
+    return;
+  }
+
+  killSwitchState = doc["killSwitch"];
+  motor_state = doc["MoistureLevel"];
+
+  Serial.print(killSwitchState);
+
+  if(killSwitchState)
+  {
+    for(int i = 0; i < 5; i++)
+    {
+      digitalWrite(BUZZER, HIGH);
+      delay(500);
+      digitalWrite(BUZZER, LOW);
+      delay(500);
+    }
+  }
+  if(motor_state < 40 )
+  {
+    digitalWrite(BUZZER, HIGH);
+    delay(1000);
+    digitalWrite(BUZZER, LOW);
+    delay(1000);
+  }
   
   // // Echo back the received message
   // client.publish(ENV_OUTTOPIC, payload, length);
@@ -201,7 +236,6 @@ void loop()
   get();
   lastPublishTime = currentTime;
   }
-
   // currentTime = millis();
   // if(currentTime - lastTime > 2000) // 10 seconds
   // {
