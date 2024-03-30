@@ -25,8 +25,7 @@ export default function DeviceSetupForm() {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    setErrorMessage(""); // Clear any previous error message
-    try {
+    setErrorMessage("");     try {
       const response = await fetch("", {
         method: "POST",
         headers: {

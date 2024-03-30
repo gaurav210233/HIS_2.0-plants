@@ -1,52 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-// import
-//   Drawer,
-// DrawerClose,
-// DrawerContent,
-// DrawerDescription,
-// DrawerFooter,
-// DrawerHeader,
-// DrawerTitle,
-// DrawerTrigger,
-// "@/components/ui/drawer";
-
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-
 import GDataCard from "./Cards/GDataCard";
-import { Button } from "../ui/button";
-import DeviceSetupForm from "./DeviceSetupForm";
+
 export interface DataProps {
   temperature: number;
   humidity: number;
   setupName: string;
 }
 const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
-  // console.log(temperature, humidity, setupName);
   return (
     <div>
       <div className="flex justify-center mb-[1vh] mx-[2vw]">

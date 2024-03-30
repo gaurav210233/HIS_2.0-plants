@@ -42,10 +42,8 @@ export default function Graph({ plantData }: PlantData) {
   });
 
   useEffect(() => {
-    // Assuming the response structure is like { createdAt: string, moistureLevel: number }[]
     const labels = plantData.map((entry) => entry.createdAt);
     const values = plantData.map((entry) => entry.MoistureLevel);
-    // Slice the last 12 entries
     const size = labels.length < 12 ? -labels.length : -12;
     const slicedLabels = labels.slice(size);
     const slicedValues = values.slice(size);
@@ -69,14 +67,11 @@ export default function Graph({ plantData }: PlantData) {
               type: "linear",
               ticks: {
                 callback: (value: string | number) => {
-                  // Check if value is a number
                   if (typeof value === "number") {
-                    // Call toFixed() only if value is a number
                     return value.toFixed(0);
                   }
-                  // If value is not a number, return the value as is
                   return value.toString();
-                }, // Use toFixed() instead of ticks.formatters.numeric
+                },
                 stepSize: 10,
               },
               min: 0,

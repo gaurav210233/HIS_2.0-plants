@@ -18,7 +18,6 @@ export default function PlantDataCard({ plantData }: PlantData) {
           </div>
           <CardContent>
             <Graph plantData={[data]} />{" "}
-            {/* Pass a single object as plantData */}
           </CardContent>
         </Card>
       ))}
