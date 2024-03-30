@@ -57,7 +57,7 @@ client.on("message", async(topic, message) => {
     }
   } else {
     console.log(data);
-    addLogViaMqtt(data)
+    // addLogViaMqtt(data)
   }
 });
 
