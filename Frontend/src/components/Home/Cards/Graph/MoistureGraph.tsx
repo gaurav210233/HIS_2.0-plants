@@ -24,17 +24,17 @@ interface PlantData {
   plantData: {
     createdAt: string;
     MoistureLevel: number;
-    PlantID: string;
+    PlantId: string;
   }[];
 }
 
 export default function Graph({ plantData }: PlantData) {
   const [chartData, setChartData] = useState({
-    labels: [],
+    labels: [] as string[],
     datasets: [
       {
         label: "Real-Time Moisture Reading",
-        data: [],
+        data: [] as number[],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
@@ -42,10 +42,8 @@ export default function Graph({ plantData }: PlantData) {
   });
 
   useEffect(() => {
-    // Assuming the response structure is like { createdAt: string, moistureLevel: number }[]
     const labels = plantData.map((entry) => entry.createdAt);
     const values = plantData.map((entry) => entry.MoistureLevel);
-    // Slice the last 12 entries
     const size = labels.length < 12 ? -labels.length : -12;
     const slicedLabels = labels.slice(size);
     const slicedValues = values.slice(size);
@@ -68,7 +66,12 @@ export default function Graph({ plantData }: PlantData) {
             y: {
               type: "linear",
               ticks: {
-                callback: (value) => value.toFixed(0), // Use toFixed() instead of ticks.formatters.numeric
+                callback: (value: string | number) => {
+                  if (typeof value === "number") {
+                    return value.toFixed(0);
+                  }
+                  return value.toString();
+                },
                 stepSize: 10,
               },
               min: 0,

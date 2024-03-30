@@ -49,21 +49,28 @@ export default function Home() {
     temperature: 0,
     setupName: "",
   });
-  const [plantData, setPlantData] = useState<PlantData[]>([]);
-
+  const [plantData, setPlantData] = useState<
+    [{ createdAt: string; MoistureLevel: number; PlantId: string }]
+  >([
+    {
+      createdAt: "",
+      MoistureLevel: 0,
+      PlantId: "",
+    },
+  ]);
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(fetchData, 100000);
+    const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
   }, []);
 
   const fetchData = async () => {
     try {
       const response = await fetch(
-        "https://jjs2jkn0-3002.inc1.devtunnels.ms/api/v1/log/all"
+        "https://jjs2jkn0-3000.inc1.devtunnels.ms/api/v1/log/all"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -79,8 +86,7 @@ export default function Home() {
 
       setGData(gData);
 
-      // Convert createdAt timestamps to hh:mm format
-      const convertedPlantData = data.map((item) => ({
+      const convertedPlantData = data.map((item: PlantData) => ({
         ...item,
         createdAt: convertToTimeFormat(item.createdAt),
       }));
@@ -100,9 +106,9 @@ export default function Home() {
 
   const handleFailSafeClick = async () => {
     try {
-      const setupId = gData.setupName; // Extract setupId from gData
+      const setupId = gData.setupName;
       const response = await fetch(
-        "https://jjs2jkn0-3002.inc1.devtunnels.ms/kill",
+        "https://jjs2jkn0-3000.inc1.devtunnels.ms/kill",
         {
           method: "PATCH",
           headers: {
@@ -151,7 +157,7 @@ export default function Home() {
           <DrawerTrigger>
             <Button
               className="my-[2vh] bg-red-900 hover:bg-red-900"
-              onClick={handleFailSafeClick} // Call handleFailSafeClick on button click
+              onClick={handleFailSafeClick}
             >
               Fail Safe
             </Button>

@@ -1,41 +1,20 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import PlantDataCard from "./Cards/PlantDataCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "../ui/dialog";
-import PlantSetupForm from "./PlantSetupForm";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 interface PlantData {
-  plantData: [
-    {
-      createdAt: string;
-      MoistureLevel: number;
-      PlantId: string;
-    }
-  ];
+  plantData: {
+    createdAt: string;
+    MoistureLevel: number;
+    PlantId: string;
+  }[];
 }
 
 export default function PlantDataCarousel({ plantData }: PlantData) {
   const plugin = React.useRef(
     Autoplay({ delay: 10000, stopOnInteraction: true })
   );
-
   const plantIds = React.useMemo(() => {
     const ids = new Set<string>();
     plantData.forEach((data) => {
@@ -57,14 +36,18 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
             <CarouselItem className="w-[100%]" key={id}>
               <div className="">
                 <PlantDataCard
-                  plantData={plantData.filter((data) => data.PlantId === id)}
+                  plantData={[
+                    plantData.find((data) => data.PlantId === id) || {
+                      createdAt: "",
+                      MoistureLevel: 0,
+                      PlantId: "",
+                    },
+                  ]}
                 />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
-        {/* <CarouselPrevious /> */}
-        {/* <CarouselNext /> */}
       </Carousel>
     </div>
   );

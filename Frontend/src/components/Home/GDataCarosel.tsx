@@ -1,80 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-// import
-//   Drawer,
-// DrawerClose,
-// DrawerContent,
-// DrawerDescription,
-// DrawerFooter,
-// DrawerHeader,
-// DrawerTitle,
-// DrawerTrigger,
-// "@/components/ui/drawer";
-
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-
 import GDataCard from "./Cards/GDataCard";
-import { Button } from "../ui/button";
-import DeviceSetupForm from "./DeviceSetupForm";
+
 export interface DataProps {
   temperature: number;
   humidity: number;
-  setupId: string;
   setupName: string;
 }
 const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
-  // console.log(temperature, humidity, setupName);
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch("", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("API response:", responseData);
-      } else {
-        console.error("API request failed with status:", response.status);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   return (
-    <div >
+    <div>
       <div className="flex justify-center mb-[1vh] mx-[2vw]">
         <h1 className="text-[3.5vh] text-[black]">Setup Devices</h1>
       </div>
       <GDataCard
-        setupId=""
         temperature={temperature}
         humidity={humidity}
         setupName={setupName}
