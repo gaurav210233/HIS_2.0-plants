@@ -9,6 +9,17 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import PlantSetupForm from "./PlantSetupForm";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 interface PlantData {
   plantData: [
@@ -55,7 +66,27 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <Button>Add a Plant</Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline">Add Plant/Crop</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Fill Device Details</DialogTitle>
+            <DialogDescription>
+              <PlantSetupForm />
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                Close
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>{" "}
     </>
   );
 }
