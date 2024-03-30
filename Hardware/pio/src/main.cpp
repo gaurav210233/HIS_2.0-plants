@@ -171,6 +171,7 @@ void send(float &humidity, float &temperature, int &moistureLevel, int motor_sta
     }
 
     avg += moistureLevel;
+    count++;
 
  }
 
