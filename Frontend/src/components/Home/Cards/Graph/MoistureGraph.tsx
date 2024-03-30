@@ -10,7 +10,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -58,27 +57,38 @@ export default function Graph({ plantData }: PlantData) {
   }, [plantData]);
 
   return (
-    <div className="dashboard" style={{ width: "90vw", height: "70vh" }}>
+    <div className="dashboard" style={{ width: "90vw", height: "42vh" }}>
       <Line
         data={chartData}
         options={{
-          aspectRatio: 2, // Adjust the aspect ratio for better appearance on mobile
-          maintainAspectRatio: true, // Maintain aspect ratio
-          responsive: true, // Resize when the container size changes
+          aspectRatio: 1,
+          maintainAspectRatio: true,
+          responsive: true,
+          scales: {
+            y: {
+              type: "linear",
+              ticks: {
+                callback: (value) => value.toFixed(0), // Use toFixed() instead of ticks.formatters.numeric
+                stepSize: 10,
+              },
+              min: 0,
+              max: 100,
+            },
+          },
           plugins: {
             title: {
               display: true,
-              text: "Moisture Level Over Time", // Graph title
+              text: "Moisture Level Over Time",
               font: {
-                size: 16, // Adjust font size for better visibility on mobile
+                size: 16,
               },
             },
             legend: {
               display: true,
-              position: "bottom", // Legend position
+              position: "bottom",
               labels: {
                 font: {
-                  size: 12, // Adjust font size for better visibility on mobile
+                  size: 12,
                 },
               },
             },

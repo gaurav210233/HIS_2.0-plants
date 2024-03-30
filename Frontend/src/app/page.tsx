@@ -28,8 +28,8 @@ export default function Home() {
       const data = await response.json();
 
       const gData = {
-        humidity: data[data.length - 1].Humidity,
-        temperature: data[data.length - 1].Temperature,
+        humidity: data[data.length - 1].Humidity.toFixed(0),
+        temperature: data[data.length - 1].Temperature.toFixed(0),
         setupName: data[data.length - 1].Id,
       };
 
@@ -60,7 +60,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(fetchData, 10000);
+    const interval = setInterval(fetchData, 100000);
     return () => clearInterval(interval);
   }, []);
 
@@ -72,13 +72,13 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="max-w-[100vw]">
       <GDataCarosel
         temperature={gData.temperature}
         humidity={gData.humidity}
         setupName={gData.setupName}
       />
       <PlantDataCarosel plantData={plantData} />
-    </>
+    </div>
   );
 }

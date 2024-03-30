@@ -9,16 +9,17 @@ const GDataCard: React.FC<DataProps> = ({
 }) => {
   return (
     <div>
-      <Card>
-        <CardContent className="m-[1vh]">
-          <span className="text-[2vh] ">Setup Name : {setupName}</span>
+      <Card className="pb-[0] py-[1.5vh]">
+        <CardContent className="pb-[0] leading-8">
+          <span className="text-[2.7vh] ">Setup Name : {setupName}</span>
           <div className="">
             <div>
-              <span>Temperature : {temperature}°C</span>
+              <span className="text-[2.5vh]">
+                Temperature : {temperature}°C
+              </span>
             </div>
             <div>
-              <span>Humidity : {humidity}%</span>
-              <h1></h1>
+              <span className="text-[2.5vh]">Humidity : {humidity}%</span>
             </div>
           </div>
         </CardContent>

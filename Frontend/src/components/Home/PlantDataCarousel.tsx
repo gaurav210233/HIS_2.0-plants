@@ -48,14 +48,14 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
     <div className="w-[100vw]">
       <Carousel
         plugins={[plugin.current]}
-        className=""
+        className="mx-[2vw] w-[100%]"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
-        <CarouselContent>
+        <CarouselContent className="w-full">
           {plantIds.map((id) => (
-            <CarouselItem key={id}>
-              <div className="w-[100vw]">
+            <CarouselItem className="w-[100%]" key={id}>
+              <div className="">
                 <PlantDataCard
                   plantData={plantData.filter((data) => data.PlantId === id)}
                 />
@@ -68,7 +68,9 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
       </Carousel>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Add Plant/Crop</Button>
+          <Button className="mx-[2vw] my-[2vh]" variant="outline">
+            Add Plant/Crop
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -79,11 +81,11 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
           </DialogHeader>
 
           <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
+            {/* <DialogClose asChild>
               <Button type="button" variant="secondary">
                 Close
               </Button>
-            </DialogClose>
+            </DialogClose> */}
           </DialogFooter>
         </DialogContent>
       </Dialog>{" "}

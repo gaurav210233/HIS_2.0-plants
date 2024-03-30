@@ -14,9 +14,11 @@ export default function PlantDataCard({ plantData }: PlantData) {
   console.log(plantData);
   return (
     <div>
-      <Card className="h-[65vh] w-[60vw]">
-        <CardContent>
+      <Card className="">
+        <div className="flex justify-center">
           <span>Plant Name : {plantData[0].PlantId}</span>
+        </div>
+        <CardContent>
           <Graph plantData={plantData} />
         </CardContent>
       </Card>

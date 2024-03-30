@@ -36,15 +36,15 @@ export interface DataProps {
 const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
   console.log(temperature, humidity, setupName);
   return (
-    <div className="my-[4vh] mx-[6vw]">
-      <h1 className="text-[black]">Setup Devices</h1>
-      <div className="p-1">
-        <GDataCard
-          temperature={temperature}
-          humidity={humidity}
-          setupName={setupName}
-        />
+    <div className="mt-[2vh] mx-[3vw]">
+      <div className="flex justify-center mb-[1vh] mx-[2vw]">
+        <h1 className="text-[3.5vh] text-[black]">Setup Devices</h1>
       </div>
+      <GDataCard
+        temperature={temperature}
+        humidity={humidity}
+        setupName={setupName}
+      />
       {/* <Carousel className=" max-w-sm ml-[100px]">
         <CarouselContent>
           {Array.from({ length: 1 }).map((_, index) => (
@@ -73,27 +73,52 @@ const GDataCarousel = ({ temperature, humidity, setupName }: DataProps) => {
           <SelectItem value="system">System</SelectItem>
         </SelectContent>
       </Select> */}
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline">Add Device</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Fill Device Details</DialogTitle>
-            <DialogDescription>
-              <DeviceSetupForm />
-            </DialogDescription>
-          </DialogHeader>
+      <div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="my-[2vh]" variant="outline">
+              Add Device
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Fill Device Details</DialogTitle>
+              <DialogDescription>
+                <DeviceSetupForm />
+              </DialogDescription>
+            </DialogHeader>
 
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
+            <DialogFooter className="sm:justify-start">
+              {/* <DialogClose asChild>
               <Button type="button" variant="secondary">
                 Close
               </Button>
+            </DialogClose> */}
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog>
+          <DialogTrigger>
+            <Button className="mx-[2vw] bg-red-900 onClick">Fail Safe</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+            </DialogHeader>
+
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                
+              </Button>
             </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                Yes
+              </Button>
+            </DialogClose>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };

@@ -21,8 +21,11 @@ const formSchema = z.object({
 
 export default function DeviceSetupForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    setErrorMessage(""); // Clear any previous error message
     try {
       const response = await fetch("", {
         method: "POST",
@@ -35,15 +38,19 @@ export default function DeviceSetupForm() {
       if (response.ok) {
         const responseData = await response.json();
         console.log("API response:", responseData);
+        form.reset();
       } else {
+        setErrorMessage("Failed to submit the form. Please try again."); // Set error message for failed submission
         console.error("API request failed with status:", response.status);
       }
     } catch (error) {
       console.error("Error:", error);
+      setErrorMessage("An unexpected error occurred. Please try again."); // Set a generic error message for unexpected errors
     } finally {
       setIsLoading(false);
     }
   };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -112,6 +119,10 @@ export default function DeviceSetupForm() {
               );
             }}
           />
+          {errorMessage && (
+            <div className="my-[2vh] text-[#FF0000]">{errorMessage}</div>
+          )}{" "}
+          {/* Display error message if there's any */}
           <Button type="submit" disabled={isLoading}>
             {isLoading ? "Adding device..." : "Add Device"}
           </Button>
