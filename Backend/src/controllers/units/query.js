@@ -68,7 +68,7 @@ export const addLogViaMqtt = async (req) => {
   return results;
 };
 
-export const getLogs = async () => {
+export const getLogsAll = async (req,res) => {
   // const res = prisma.unit.findMany({
   //   where: {
   //     createdAt: {
@@ -103,22 +103,25 @@ export const getLogs = async () => {
 //   WHERE row_number = 1;
 // `;
 
-  return results;
+   res.json(results);
 };
 
 
-export const logSql = async()=>{
-    const results = await prisma.$queryRaw`
-  SELECT *
-  FROM (
-    SELECT 
-      *,
-      ROW_NUMBER() OVER (PARTITION BY DATE_TRUNC('hour', "createdAt") ORDER BY "createdAt" ASC) AS row_number
-    FROM "units"
-    WHERE "createdAt" >= NOW() - INTERVAL '12 hours'
-  ) AS subquery
-  WHERE row_number = 1;
-`;
-return results
 
+
+export const getLogs = async()=>{
+  const results = await prisma.unit.findMany({
+    where: {
+      createdAt: {
+        gte: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12 hours ago
+      },
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+    distinct: ['LogId'], 
+    take: 1,
+  });
+
+  return results
 }
