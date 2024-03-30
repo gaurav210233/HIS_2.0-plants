@@ -28,11 +28,23 @@ void CustomMqtt::callback(char *topic, byte *payload, unsigned int length)
     Serial.print("Message arrived [");
     Serial.print(topic);
     Serial.print("] ");
+
+    String message;
     for (int i = 0; i < length; i++)
     {
-        Serial.print((char)payload[i]);
+        message += (char)payload[i];
     }
-    Serial.println();
+
+    // Convert string to an integer
+    int value = message.toInt();
+
+    // Check if the value is between 0 and 100
+    if (value >= 0 && value <= 100) {
+        Serial.print("Received value: ");
+        Serial.println(value);
+    } else {
+        Serial.println("Invalid value received!");
+    }
 }
 
 void CustomMqtt::reconnect()
@@ -46,7 +58,7 @@ void CustomMqtt::reconnect()
         {
             Serial.println("Connected to");
             Serial.println(BROKER);
-            _client.subscribe(INTOPIC);
+            _client.subscribe(ENV_INTOPIC);
         }
         else
         {
@@ -57,3 +69,4 @@ void CustomMqtt::reconnect()
         }
     }
 }
+
