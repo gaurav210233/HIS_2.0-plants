@@ -24,17 +24,17 @@ interface PlantData {
   plantData: {
     createdAt: string;
     MoistureLevel: number;
-    PlantID: string;
+    PlantId: string;
   }[];
 }
 
 export default function Graph({ plantData }: PlantData) {
   const [chartData, setChartData] = useState({
-    labels: [],
+    labels: [] as string[],
     datasets: [
       {
         label: "Real-Time Moisture Reading",
-        data: [],
+        data: [] as number[],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
@@ -68,7 +68,15 @@ export default function Graph({ plantData }: PlantData) {
             y: {
               type: "linear",
               ticks: {
-                callback: (value) => value.toFixed(0), // Use toFixed() instead of ticks.formatters.numeric
+                callback: (value: string | number) => {
+                  // Check if value is a number
+                  if (typeof value === "number") {
+                    // Call toFixed() only if value is a number
+                    return value.toFixed(0);
+                  }
+                  // If value is not a number, return the value as is
+                  return value.toString();
+                }, // Use toFixed() instead of ticks.formatters.numeric
                 stepSize: 10,
               },
               min: 0,
