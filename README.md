@@ -1,3 +1,4 @@
+![Logo](https://github.com/gaurav210233/HIS_2.0-plants/assets/113800473/94086af2-6dad-4c9d-b585-c12f3014d7e6)
 
 # Vardaan🪴 - HIS 2.0
 
