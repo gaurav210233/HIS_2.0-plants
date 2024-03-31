@@ -48,3 +48,7 @@ Vardaan is designed for simplicity and ease of use. With straightforward install
 ## Screenshots
 ![Dashboard_Graph](https://github.com/gaurav210233/HIS_2.0-plants/assets/113800473/a54f10e0-4236-401b-94c6-c5c3c5cdeec9)
 ![Add_device](https://github.com/gaurav210233/HIS_2.0-plants/assets/113800473/91e84c32-dee4-4fbd-bd8e-4bdfb7ad00c9)
+
+
+https://github.com/gaurav210233/HIS_2.0-plants/assets/113800473/8a7cf52b-2f16-4152-9752-c92df1d0342a
+
