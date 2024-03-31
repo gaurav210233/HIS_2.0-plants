@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Vardaan - HIS 2.0",
   description: "An Automated Plants Watering Platform",
-  imageUrl: "/LOGO.PNG",
+  
+  openGraph: {
+    images: '/LOGO.png',
+  },
 };
 
 export default function RootLayout({
