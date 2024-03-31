@@ -9,18 +9,20 @@ interface PlantData {
   }[];
 }
 export default function PlantDataCard({ plantData }: PlantData) {
+  // console.log("Hi ", plantData);
+
   return (
     <div>
-      {plantData.map((data, index) => (
-        <Card key={index} className="">
-          <div className="flex justify-center">
-            <span>Plant Name : {data.PlantId}</span>
-          </div>
-          <CardContent>
-            <Graph plantData={[data]} />{" "}
-          </CardContent>
-        </Card>
-      ))}
+      {/* {plantData.map((data, index) => ( */}
+      <Card className="">
+        <div className="flex justify-center">
+          <span>Plant Name : {plantData[0].PlantId}</span>
+        </div>
+        <CardContent>
+          <Graph plantData={plantData} />{" "}
+        </CardContent>
+      </Card>
+      {/* ))} */}
     </div>
   );
 }

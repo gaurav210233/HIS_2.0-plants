@@ -66,6 +66,9 @@ export default function Home() {
     const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+    // console.log("Hello", plantData);
+  }, [plantData]);
 
   const fetchData = async () => {
     try {
@@ -90,6 +93,7 @@ export default function Home() {
         ...item,
         createdAt: convertToTimeFormat(item.createdAt),
       }));
+      // console.log(convertedPlantData);
 
       setPlantData(convertedPlantData);
     } catch (error) {
