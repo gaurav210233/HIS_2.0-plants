@@ -1,3 +1,4 @@
+"use client";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +26,8 @@ export default function DeviceSetupForm() {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    setErrorMessage("");     try {
+    setErrorMessage("");
+    try {
       const response = await fetch("", {
         method: "POST",
         headers: {

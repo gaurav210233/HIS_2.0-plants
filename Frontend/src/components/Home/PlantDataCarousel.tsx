@@ -4,17 +4,20 @@ import PlantDataCard from "./Cards/PlantDataCard";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 interface PlantData {
-  plantData: {
-    createdAt: string;
-    MoistureLevel: number;
-    PlantId: string;
-  }[];
+  plantData: [
+    {
+      createdAt: string;
+      MoistureLevel: number;
+      PlantId: string;
+    }
+  ];
 }
 
 export default function PlantDataCarousel({ plantData }: PlantData) {
   const plugin = React.useRef(
     Autoplay({ delay: 10000, stopOnInteraction: true })
   );
+
   const plantIds = React.useMemo(() => {
     const ids = new Set<string>();
     plantData.forEach((data) => {
@@ -36,13 +39,7 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
             <CarouselItem className="w-[100%]" key={id}>
               <div className="">
                 <PlantDataCard
-                  plantData={[
-                    plantData.find((data) => data.PlantId === id) || {
-                      createdAt: "",
-                      MoistureLevel: 0,
-                      PlantId: "",
-                    },
-                  ]}
+                  plantData={plantData.filter((data) => data.PlantId === id)}
                 />
               </div>
             </CarouselItem>

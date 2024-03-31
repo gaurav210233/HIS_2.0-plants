@@ -20,8 +20,7 @@ const formSchema = z.object({
 
 export default function PlantSetupForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [submitError, setSubmitError] = useState<string | null>(null); // State variable to track submission error
-
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     setSubmitError(null); // Reset submit error
@@ -39,11 +38,11 @@ export default function PlantSetupForm() {
         form.reset();
         console.log("API response:", responseData);
       } else {
-        setSubmitError("Failed to submit the form. Please try again."); // Set submit error message
+        setSubmitError("Failed to submit the form. Please try again.");
         console.error("API request failed with status:", response.status);
       }
     } catch (error) {
-      setSubmitError("Failed to submit the form. Please try again."); // Set submit error message
+      setSubmitError("Failed to submit the form. Please try again.");
       console.error("Error:", error);
     } finally {
       setIsLoading(false);
@@ -62,7 +61,6 @@ export default function PlantSetupForm() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          {/* Display submit error message */}
           <FormField
             control={form.control}
             name="plantName"
@@ -99,7 +97,7 @@ export default function PlantSetupForm() {
           />
           {submitError && (
             <p className="my-[2vh] text-[#FF0000]">{submitError}</p>
-          )}{" "}
+          )}
           <Button type="submit" disabled={isLoading}>
             {isLoading ? "Adding plant..." : "Add Plant"}
           </Button>

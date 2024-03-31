@@ -36,6 +36,7 @@ const DrawerTrigger = dynamic(
 
 import { Button } from "@/components/ui/button";
 import DeviceSetupForm from "@/components/Home/DeviceSetupForm";
+import PlantSetupForm from "@/components/Home/PlantSetupForm";
 
 export interface PlantData {
   createdAt: string;
@@ -66,6 +67,7 @@ export default function Home() {
     const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {}, [plantData]);
 
   const fetchData = async () => {
     try {
@@ -90,6 +92,7 @@ export default function Home() {
         ...item,
         createdAt: convertToTimeFormat(item.createdAt),
       }));
+      // console.log(convertedPlantData);
 
       setPlantData(convertedPlantData);
     } catch (error) {
@@ -183,7 +186,7 @@ export default function Home() {
           <DrawerHeader>
             <DrawerTitle>Fill Device Details</DrawerTitle>
             <DrawerDescription>
-              <DeviceSetupForm />
+              <PlantSetupForm />
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>
