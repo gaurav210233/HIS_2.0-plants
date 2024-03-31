@@ -1,25 +1,7 @@
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
 import PlantDataCard from "./Cards/PlantDataCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "../ui/dialog";
-import PlantSetupForm from "./PlantSetupForm";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 interface PlantData {
   plantData: [
@@ -62,9 +44,7 @@ export default function PlantDataCarousel({ plantData }: PlantData) {
               </div>
             </CarouselItem>
           ))}
-        </CarouselContent>  
-        {/* <CarouselPrevious /> */}
-        {/* <CarouselNext /> */}
+        </CarouselContent>
       </Carousel>
     </div>
   );

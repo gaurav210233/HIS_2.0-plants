@@ -36,6 +36,7 @@ const DrawerTrigger = dynamic(
 
 import { Button } from "@/components/ui/button";
 import DeviceSetupForm from "@/components/Home/DeviceSetupForm";
+import PlantSetupForm from "@/components/Home/PlantSetupForm";
 
 export interface PlantData {
   createdAt: string;
@@ -187,7 +188,7 @@ export default function Home() {
           <DrawerHeader>
             <DrawerTitle>Fill Device Details</DrawerTitle>
             <DrawerDescription>
-              <DeviceSetupForm />
+              <PlantSetupForm />
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>
